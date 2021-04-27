@@ -137,6 +137,8 @@ class Board:
             board_id = self._armbian_id()
         elif chip_id == chips.H616:
             board_id = self._armbian_id()
+        elif chip_id == chips.A20:
+            board_id = self._armbian_id()
         elif chip_id == chips.A33:
             board_id = self._clockwork_pi_id()
         elif chip_id == chips.RK3308:
@@ -284,6 +286,8 @@ class Board:
             board = boards.PINEH64
         elif board_value == "orangepi2":
             board = boards.ORANGE_PI_2
+        elif board_value == "bananapim2plus":
+            board = boards.BANANA_PI_M2_PLUS
         elif board_value == "bananapim2zero":
             board = boards.BANANA_PI_M2_ZERO
         elif board_value == "orangepizeroplus2-h5":

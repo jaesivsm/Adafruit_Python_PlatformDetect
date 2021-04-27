@@ -72,21 +72,17 @@ class Detector:
         Search /etc/armbian-release, if it exists, for a field and return its
         value, if found, otherwise None.
         """
-        field_value = None
-
         pattern = r"^" + field + r"=(.*)"
         try:
-            with open("/etc/armbian-release", "r") as release_file:
-                armbian = release_file.read().split("\n")
-                for line in armbian:
-                    match = re.search(pattern, line)
-                    if match:
-                        field_value = match.group(1)
-                release_file.close()
+            for path in 'armbian-release', 'armbian-image-release':
+                with open("/etc/" + path, "r") as release_file:
+                    armbian = release_file.read().split("\n")
+                    for line in armbian:
+                        match = re.search(pattern, line)
+                        if match:
+                            return match.group(1)
         except FileNotFoundError:
             pass
-
-        return field_value
 
     def get_device_model(self):
         """

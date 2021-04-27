@@ -73,16 +73,16 @@ class Detector:
         value, if found, otherwise None.
         """
         pattern = r"^" + field + r"=(.*)"
-        try:
-            for path in 'armbian-release', 'armbian-image-release':
+        for path in 'armbian-release', 'armbian-image-release':
+            try:
                 with open("/etc/" + path, "r") as release_file:
                     armbian = release_file.read().split("\n")
                     for line in armbian:
                         match = re.search(pattern, line)
                         if match:
                             return match.group(1)
-        except FileNotFoundError:
-            pass
+            except FileNotFoundError:
+                pass
 
     def get_device_model(self):
         """

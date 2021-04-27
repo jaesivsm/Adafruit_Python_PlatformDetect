@@ -72,13 +72,13 @@ class Detector:
         Search /etc/armbian-release, if it exists, for a field and return its
         value, if found, otherwise None.
         """
-        pattern = r"^" + field + r"=(.*)"
+        pattern = re.compile(r"^%s=(.*)" % field)
         for path in 'armbian-release', 'armbian-image-release':
             try:
                 with open("/etc/" + path, "r") as release_file:
                     armbian = release_file.read().split("\n")
                     for line in armbian:
-                        match = re.search(pattern, line)
+                        match = pattern.search(line)
                         if match:
                             return match.group(1)
             except FileNotFoundError:
